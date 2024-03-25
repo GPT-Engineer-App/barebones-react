@@ -1,12 +1,17 @@
 import React from "react";
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Container, Text } from "@chakra-ui/react";
+import Monsters from "../components/Monsters";
 
 function MonstersPage() {
   return (
-    <Box>
-      <Text fontSize="2xl">Monsters Overview</Text>
-      {}
-    </Box>
+    <Container py={8}>
+      <Box>
+        <Text fontSize="2xl" mb={4}>
+          Monsters Overview
+        </Text>
+        <Monsters />
+      </Box>
+    </Container>
   );
 }
 
