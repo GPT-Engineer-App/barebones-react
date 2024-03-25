@@ -1,13 +1,13 @@
-import React from "react";
-import { ChakraProvider, Box, Text } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
+import { Link } from "@chakra-ui/react";
 
 const Index = () => {
   return (
-    <ChakraProvider>
-      <Box p={4}>
-        <Text>Welcome to the React App!</Text>
-      </Box>
-    </ChakraProvider>
+    <div>
+      <Link as={RouterLink} to="/monsters">
+        View Monsters
+      </Link>
+    </div>
   );
 };
 
