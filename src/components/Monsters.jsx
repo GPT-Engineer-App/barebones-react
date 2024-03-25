@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Text, Heading, Spinner, Alert, AlertIcon, AlertDescription } from '@chakra-ui/react';
+import React, { useState, useEffect } from "react";
+import { Box, Heading, Spinner, Alert, AlertIcon, AlertDescription, SimpleGrid } from "@chakra-ui/react";
+import { Card, CardHeader, CardBody, Text } from "@chakra-ui/react";
 
 const Monsters = () => {
   const [monsters, setMonsters] = useState([]);
@@ -9,12 +10,19 @@ const Monsters = () => {
   useEffect(() => {
     const fetchMonsters = async () => {
       try {
-        const res = await fetch('https://www.dnd5eapi.co/api/monsters');
+        const res = await fetch("https://www.dnd5eapi.co/api/monsters");
         if (!res.ok) {
-          throw new Error('Failed to fetch monsters');
+          throw new Error("Failed to fetch monsters");
         }
         const data = await res.json();
-        setMonsters(data.results);
+        const monsterDetails = await Promise.all(
+          data.results.map(async (monster) => {
+            const detailRes = await fetch(`https://www.dnd5eapi.co${monster.url}`);
+            const detailData = await detailRes.json();
+            return detailData;
+          }),
+        );
+        setMonsters(monsterDetails);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -47,9 +55,26 @@ const Monsters = () => {
       <Heading as="h1" mb={4}>
         D&D Monsters
       </Heading>
-      {monsters.map((monster) => (
-        <Text key={monster.index}>{monster.name}</Text>
-      ))}
+      <SimpleGrid columns={[1, 2, 3]} spacing={8}>
+        {monsters.map((monster) => (
+          <Card key={monster.index}>
+            <CardHeader>
+              <Heading size="md">{monster.name}</Heading>
+            </CardHeader>
+            <CardBody>
+              <Text>
+                <strong>Type:</strong> {monster.type}
+              </Text>
+              <Text>
+                <strong>Alignment:</strong> {monster.alignment}
+              </Text>
+              <Text>
+                <strong>Challenge Rating:</strong> {monster.challenge_rating}
+              </Text>
+            </CardBody>
+          </Card>
+        ))}
+      </SimpleGrid>
     </Box>
   );
 };
