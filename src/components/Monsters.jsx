@@ -57,18 +57,20 @@ const Monsters = () => {
       </Heading>
       <SimpleGrid columns={[1, 2, 3]} spacing={8}>
         {monsters.map((monster) => (
-          <Card key={monster.index}>
+          <Card key={monster.index} bg="brand.700">
             <CardHeader>
-              <Heading size="md">{monster.name}</Heading>
+              <Heading size="md" color="white">
+                {monster.name}
+              </Heading>
             </CardHeader>
             <CardBody>
-              <Text>
+              <Text color="brand.500">
                 <strong>Type:</strong> {monster.type}
               </Text>
-              <Text>
+              <Text color="brand.500">
                 <strong>Alignment:</strong> {monster.alignment}
               </Text>
-              <Text>
+              <Text color="brand.500">
                 <strong>Challenge Rating:</strong> {monster.challenge_rating}
               </Text>
             </CardBody>

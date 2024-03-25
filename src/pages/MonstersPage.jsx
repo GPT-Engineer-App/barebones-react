@@ -6,7 +6,7 @@ function MonstersPage() {
   return (
     <Container py={8}>
       <Box>
-        <Text fontSize="2xl" mb={4}>
+        <Text fontSize="2xl" mb={4} color="brand.600">
           Monsters Overview
         </Text>
         <Monsters />
